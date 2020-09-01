@@ -1,2 +1,2 @@
-# budgetapp
-Application for tracking home budget. 
+# Ferm
+Application for menage plants in home.  
