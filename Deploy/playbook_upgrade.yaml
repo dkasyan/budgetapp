@@ -1,0 +1,15 @@
+- name: ensure a list of packages installed
+  apt-get:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - vim
+    - mc
+    - htop
+    - tcpdump
+    - tmux
+    - python3
+    - wget
+    - git
+    - zip
+    - tar

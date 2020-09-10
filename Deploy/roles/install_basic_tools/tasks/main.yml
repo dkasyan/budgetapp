@@ -1,0 +1,14 @@
+- name: Install a list of packages
+  apt:
+    pkg:
+    - vim
+    - mc
+    - htop
+    - tcpdump
+    - tmux
+    - python3
+    - wget
+    - git
+    - zip
+    - tar
+    - net-tools
