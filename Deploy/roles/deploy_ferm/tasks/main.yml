@@ -1,3 +1,11 @@
+---
+- name: Add project folder
+  file:
+    path: /opt/ferm
+    state: directory
+    owner: pi
+    group: pi
+    mode: u=rwx,g=rwx,o=rwx
 #Załóż katalog
 #Skopiuj systemct
 #Skopiuj zawartość gita
