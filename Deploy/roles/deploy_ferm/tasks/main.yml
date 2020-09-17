@@ -1,12 +1,14 @@
 ---
-- name: Add project folder
-  file:
-    path: /opt/ferm
-    state: directory
-    owner: pi
-    group: pi
-    mode: u=rwx,g=rwx,o=rwx
-#Załóż katalog
+- name: Download foo.conf
+  get_url:
+    url: https://github.com/dkasyan/Ferm/archive/master.zip
+    dest: /tmp/
+    mode: '0777'
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: /tmp/Ferm-master.zip
+    dest: /opt/
+    remote_src: yes
 #Skopiuj systemct
 #Skopiuj zawartość gita
 #Zresetuj systemct startujac projekt 
