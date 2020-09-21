@@ -2,7 +2,7 @@
 - hosts: all
   become: yes
   roles:
-#    - upgrade_rpi
-#    - install_basic_tools
+    - upgrade_rpi
+    - install_basic_tools
     - deploy_ferm
 

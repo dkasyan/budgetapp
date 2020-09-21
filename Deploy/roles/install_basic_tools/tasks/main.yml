@@ -13,3 +13,17 @@
     - zip
     - tar
     - net-tools
+    - python3-pip ### Req
+#Try look pip3
+#- name: Install Adafruit_DHT
+#  pip:
+#    name: Adafruit_DHT
+
+#- name: Install adafruit-io
+#  pip:
+#    name: adafruit-io
+
+
+
+
+
