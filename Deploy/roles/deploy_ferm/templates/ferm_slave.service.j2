@@ -1,14 +1,31 @@
 [Unit]
-Description=My service
+Description=Ferm Slave 
 After=network.target
 
 [Service]
+User=pi
+Restart=always
 ExecStart=/usr/bin/python3 -u main.py
-WorkingDirectory=/home/pi/myscript
+WorkingDirectory=/opt/Ferm-master
 StandardOutput=inherit
 StandardError=inherit
-Restart=always
-User=pi
+
+--------
 
 [Install]
 WantedBy=multi-user.target
+
+[Unit]
+Description=Kodi daemon
+After=default.target graphical.target getty.target sound.target
+
+[Service]
+User=kodi
+Type=simple
+Restart=always
+RestartSec=5s
+Environment=KODI_HOME=/usr/share/kodi/
+ExecStart=/bin/bash -c '/usr/bin/xinit /usr/bin/dbus-launch --exit-with-session /usr/bin/kodi-standalone -- :0 -nolisten tcp vt7 &>/dev/null'
+
+[Install]
+WantedBy=default.target

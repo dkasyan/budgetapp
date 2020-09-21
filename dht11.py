@@ -2,6 +2,7 @@
 import Adafruit_DHT
 import os
 import logging
+import time
 
 ### Gdzie dodawać fragment logging.basicConfig, na początku czy końcu programu?
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s', filename="logfile.log")
