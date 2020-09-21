@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 import Adafruit_DHT
 import os
+import logging
+
+### Gdzie dodawać fragment logging.basicConfig, na początku czy końcu programu?
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s', filename="logfile.log")
 
 from datetime import datetime
 
@@ -8,28 +12,14 @@ from datetime import datetime
 
 def get_mesure():
   time = datetime.now()
-  sensor1 = Adafruit_DHT.DHT11
+  sensor = Adafruit_DHT.DHT11
+  DHT11_pin = 23
+  humidity, temperature = Adafruit_DHT.read_retry(sensor, DHT11_pin)
+  logging.info(f"Wilgotność {humidity} Temp {temperature}")
 
 
 
-time = datetime.now()
-sensor = Adafruit_DHT.DHT11
-DHT11_pin = 23
-path = '/home/pi/AdminStuff'
+ # dane = ('Temperature={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
 
-
-humidity, temperature = Adafruit_DHT.read_retry(sensor, DHT11_pin)
-if humidity is not None and temperature is not None:
-  dane = ('Temperature={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
-  file = open("dht11_data.log", "a")
-  file.write(str(time) + " " + dane + "\n")
-  file.close()
-  
-else:
-  print('Failed to get reading from the sensor.')
-
-
-def get_mesure():
-  time = datetime.now()
-  sensor1 = Adafruit_DHT.DHT11
+get_mesure()
   
