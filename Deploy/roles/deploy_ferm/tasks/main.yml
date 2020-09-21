@@ -8,6 +8,8 @@
   unarchive:
     src: /tmp/Ferm-master.zip
     dest: /opt/
+    user: pi
+    group: pi
     remote_src: yes
 #Skopiuj systemct
 #Skopiuj zawartość gita
