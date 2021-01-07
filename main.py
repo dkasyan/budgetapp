@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import Adafruit_DHT
+#import Adafruit_DHT
 import os
 import logging
 import time
@@ -15,16 +15,12 @@ DHT11_pin = 23
 
 def get_mesure():
   times = datetime.now()
-  sensor = Adafruit_DHT.DHT11
-  humidity, temperature = Adafruit_DHT.read_retry(sensor, DHT11_pin)
-  logging.info(f"Wilgotność {humidity} % Temp {temperature} *C")
+#  sensor = Adafruit_DHT.DHT11
+#  humidity, temperature = Adafruit_DHT.read_retry(sensor, DHT11_pin)
+#  logging.info(f"Wilgotność {humidity} % Temp {temperature} *C")
+  return 22
 
 
 
  # dane = ('Temperature={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
 
-get_mesure()
-logic = True
-while logic == True:
-  get_mesure()
-  time.sleep(period)

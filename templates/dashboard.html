@@ -8,9 +8,17 @@
 
 <body class="body">
 <main class="card">
-    <img class="card_Photo" src="{{ url_for('static',filename='image.jpg') }}" alt="Damian Photo">
     <div>
-        <div id="content">{% block content %}{% endblock %}</div>      
+        <div id="content">{% block content %}
+            {{  dash.humidity   }}
+            {{  dash.temperature   }}
+            {% endblock %}</div>
+
+        <form action="" method="post">
+            <label>Napisz do mnie!</label>
+            <input name="message"/>
+            <input type="submit"/>
+        </form>      
     </div>
 </main>
 
