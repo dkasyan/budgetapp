@@ -20,10 +20,7 @@ def get_mesure(period, DHT11_pin):
   sensor = Adafruit_DHT.DHT11
   humidity, temperature = Adafruit_DHT.read_retry(sensor, DHT11_pin)
   logging.info(f"Wilgotność {humidity} % Temp {temperature} *C")
-  return 
-
-
-
+  return
  # dane = ('Temperature={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
 
 get_mesure()

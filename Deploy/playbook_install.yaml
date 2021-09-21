@@ -4,5 +4,7 @@
   roles:
     - upgrade_rpi
     - install_basic_tools
+    # Sprawdz czy jest juz instancja jesli tak backapuj ja, jesli nie pomin ten krok
+    # Jeśli jest instancja skasuj ja
     - deploy_ferm
-
+    
