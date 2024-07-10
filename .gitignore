@@ -4,6 +4,8 @@ ferm_inventory
 *.retry
 # Napisz tutaj wyjątek dla pliku Wyciąg 30.06.2024.pdf
 Wyciąg 30.06.2024.pdf
+template.pdf
+output.xlsx
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python

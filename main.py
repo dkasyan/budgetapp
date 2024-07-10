@@ -2,67 +2,87 @@ import fitz  # PyMuPDF
 import openpyxl
 from openpyxl import Workbook
 import re
+from datetime import datetime
 
-# Funkcja do odczytu danych z pliku PDF
+# Function to read data from PDF file
 def read_pdf(file_path):
-    # Otwórz plik PDF
+    # Open the PDF file
     pdf_document = fitz.open(file_path)
     text = ""
     
-    # Iteruj przez strony i zczytuj tekst
+    # Iterate through pages and extract text
     for page_num in range(pdf_document.page_count):
         page = pdf_document.load_page(page_num)
         text += page.get_text()
     
+    # Extract the text below the phrase "Wyszczególnienie transakcji"
+    transaction_details_index = text.find("Wyszczególnienie transakcji")
+    if transaction_details_index != -1:
+        text = text[transaction_details_index:]
+    
     return text
 
-# Funkcja do parsowania tekstu PDF
+# Function to parse PDF text
 def parse_text(text):
-    # Regularne wyrażenia do znalezienia dat, kwot i opisów
+    # Regular expressions to find dates, amounts, and descriptions
     date_pattern = re.compile(r'\d{2}/\d{2}/\d{4}')
     amount_pattern = re.compile(r'-?\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})')
     description_pattern = re.compile(r'TRANSAKCJA KARTĄ PŁATNICZĄ\s+.*|PRZELEW INTERNET.*|PRZELEW PODZIELONY.*|PRZELEW DO US.*|PROWIZJE AUT.*|PRZEKAZ EURO-KRAJOWY.*|WYPŁATA KARTĄ.*')
 
-    # Znajdź wszystkie wystąpienia wzorców
+    # Find all pattern occurrences
     dates = date_pattern.findall(text)
     amounts = amount_pattern.findall(text)
     descriptions = description_pattern.findall(text)
 
-    # Dopasuj długości, aby zapewnić, że wszystkie listy mają tę samą długość
+    # Match lengths to ensure all lists have the same length
     length = min(len(dates), len(amounts), len(descriptions))
 
     return dates[:length], amounts[:length], descriptions[:length]
 
-# Funkcja do zapisu danych do pliku Excel
+# Function to validate date format
+def is_valid_date(date_string):
+    try:
+        datetime.strptime(date_string, '%d/%m/%Y')
+        return True
+    except ValueError:
+        return False
+
+# Function to write data to Excel file
 def write_to_excel(dates, amounts, descriptions, output_file):
     wb = Workbook()
     ws = wb.active
     ws.title = "Transactions"
 
-    # Nagłówki
-    ws.append(["Data", "Kwota", "Opis"])
+    # Headers
+    ws.append(["Date", "Amount", "Description"])
 
-    # Dodaj dane
-    for date, amount, description in zip(dates, amounts, descriptions):
+    # Combine data into a list of tuples and filter invalid dates
+    data = [(date, amount, description) for date, amount, description in zip(dates, amounts, descriptions) if is_valid_date(date)]
+
+    # Sort data by date
+    data.sort(key=lambda x: datetime.strptime(x[0], '%d/%m/%Y'))
+
+    # Add sorted data to Excel
+    for date, amount, description in data:
         ws.append([date, amount, description])
 
-    # Zapisz plik
+    # Save file
     wb.save(output_file)
 
-# Główna funkcja
+# Main function
 def main():
-    pdf_path = 'input.pdf'  # Ścieżka do pliku PDF
-    output_excel = 'output.xlsx'  # Ścieżka do pliku Excel
+    pdf_path = 'template.pdf'  # Path to the PDF file
+    output_excel = 'output.xlsx'  # Path to the Excel file
 
-    # Odczytaj dane z PDF
+    # Read data from PDF
     text = read_pdf(pdf_path)
 
-    # Przetwórz tekst
+    # Process text
     dates, amounts, descriptions = parse_text(text)
 
-    # Zapisz do Excel
+    # Save to Excel
     write_to_excel(dates, amounts, descriptions, output_excel)
-    print(f"Dane zapisane w pliku {output_excel}")
+    print(f"Data saved in {output_excel}")
 
 if __name__ == "__main__":
     main()
