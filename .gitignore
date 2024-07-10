@@ -2,6 +2,9 @@ ferm_inventory
 
 ### Ansible ###
 *.retry
+# Napisz tutaj wyjątek dla pliku Wyciąg 30.06.2024.pdf
+Wyciąg 30.06.2024.pdf
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
